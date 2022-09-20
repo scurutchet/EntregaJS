@@ -12,55 +12,32 @@ class Gasto{
 const arregloGastos = [];
 let totalGastos = 0;
 
-let gastosAlquiler = {
-     alquiler: parseFloat (prompt ("Ingresa el monto que pagas de alquiler")),
-};
-let gastosServicios = {
-      electricidad: parseFloat (prompt ("Ingresa el monto que pagas de corriente eléctrica")),
-      agua: parseFloat (prompt ("Ingresa el monto que pagas de agua")),
-      internet: parseFloat (prompt ("Ingresa el monto que pagas de internet"))
-};
-let gastosVarios = {
-     varios: parseFloat (prompt ("Si tienes, ingresa el monto de otros gastos mensuales")),
-};
-
-let opcion = prompt("¿Desea agregar un gasto?").toLowerCase()
+let opcion = prompt("¿Tienes gastos fijos mensuales? SI / NO").toLowerCase();
 
 while(opcion!="no"){
      ingresarGastos()
-}
+};
 
 function ingresarGastos(){
-     let ingreseNombre = prompt("Ingrese el nombre del gasto");
-     let ingreseMonto = parseFloat(prompt("Ingrese el monto que gastó"))
+     let ingreseNombre = prompt("Ingresa el nombre del gasto");
+     let ingreseMonto = parseFloat(prompt("Ingresa el monto."));
      const gastos = new Gasto (ingreseNombre, ingreseMonto);
-     arregloGastos.push(gastos)
-     opcion = prompt("¿Desea agregar un gasto? SI / NO").toLowerCase()
-}
+     arregloGastos.push(gastos);
+     opcion = prompt("¿Deseas agregar otro gasto? SI / NO").toLowerCase();
+};
 
-console.log(arregloGastos);
+arregloGastos.forEach((Gasto) => {
+     console.log(Gasto);
+ });
 
-function calcularTotal(array){
-     let totalGastos = array.reduce((acumulador,elemento)=>acumulador+elemento.monto,0)
+totalGastos = arregloGastos.reduce((acumulador,elemento)=>acumulador+elemento.monto,0)
      console.log("Total: $" + totalGastos);
-}
-
-calcularTotal(arregloGastos)
-
-let suma = 0;
-
-for ( let i=0; i < arregloGastos.length; i++) {
-     console.log(arregloGastos)
-     suma += arregloGastos[i];
-}
 
 let ahorroDeseado;
+let disponible= (sueldo - totalGastos);
 
-while (sueldo <= suma){
+while (sueldo <= totalGastos){
      alert("No te sobra nada, no vas a poder ahorrar :(");
-};
-while ((sueldo - suma) <= ahorroDeseado) {
-     alert("Lo que quieres ahorrar es más de lo que tienes disponible, prueba con una cantidad menor :(");
 };
 
 ahorroDeseado = parseFloat (prompt ("¿Cuánto quieres ahorrar este mes?"));
@@ -68,12 +45,13 @@ const semanasDelMes = 4;
 
 function calculoDisponible(valor1, valor2, valor3, valor4){
      resultado = (valor1 - valor2 - valor3) / valor4;
-}
+};
 
-function mostrar(mensaje){
-    console.log(mensaje);
-}
-console.log(sueldo,suma,ahorroDeseado,semanasDelMes)
-calculoDisponible(sueldo, suma, ahorroDeseado, semanasDelMes);
-mostrar(resultado);
-alert("Lo que puedes gastar por semana es $" + resultado);
+console.log(sueldo,totalGastos,ahorroDeseado,semanasDelMes)
+calculoDisponible(sueldo, totalGastos, ahorroDeseado, semanasDelMes);
+
+if (disponible <= ahorroDeseado){
+     alert("Lo que quieres ahorrar es más de lo que tienes disponible, prueba con una cantidad menor :(");
+} else {
+     alert("Lo que puedes gastar por semana es $" + resultado);
+};
